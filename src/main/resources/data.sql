@@ -1,0 +1,1 @@
+INSERT INTO PUBLIC.USER(id, email, password) VALUES (1, 'zofia.bajerska@gmail.com', 'Zosia123');
