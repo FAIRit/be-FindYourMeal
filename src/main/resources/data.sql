@@ -1,1 +1,3 @@
-INSERT INTO PUBLIC.USER(id, email, password) VALUES (1, 'zofia.bajerska@gmail.com', 'Zosia123');
+INSERT INTO PUBLIC.USERS(email, password, type) VALUES
+('zofia.bajerska@gmail.com', 'Zosia123', 'ADMIN'),
+('jaja@gmail.com', 'Zosia123', 'USER');

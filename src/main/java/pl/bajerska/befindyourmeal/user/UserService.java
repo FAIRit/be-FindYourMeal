@@ -2,9 +2,9 @@ package pl.bajerska.befindyourmeal.user;
 
 public interface UserService {
 
-    User update(User user);
+    User update(UserLoginData userLoginData, UserType userType) throws InvalidUserPasswordException, InvalidUserEmailException;
 
-    boolean add(User user);
+    User add(UserLoginData userLoginData, UserType userType) throws InvalidUserPasswordException, InvalidUserEmailException;
 
     User findByEmail(String email);
 
