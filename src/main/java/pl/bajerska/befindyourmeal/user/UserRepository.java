@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface UserRepository extends CrudRepository<User, Long>, QueryByExampleExecutor<User> {
 
-    User findByEmail(String email);
+    User findByUsername(String username);
 
     User findById (String id);
 

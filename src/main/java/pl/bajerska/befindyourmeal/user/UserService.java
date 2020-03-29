@@ -1,13 +1,19 @@
 package pl.bajerska.befindyourmeal.user;
 
+import pl.bajerska.befindyourmeal.exception.InvalidUserEmailException;
+import pl.bajerska.befindyourmeal.exception.InvalidUserPasswordException;
+import java.util.List;
+
 public interface UserService {
 
-    User update(UserLoginData userLoginData, UserType userType) throws InvalidUserPasswordException, InvalidUserEmailException;
+    User update(User user) throws InvalidUserPasswordException, InvalidUserEmailException;
 
-    User add(UserLoginData userLoginData, UserType userType) throws InvalidUserPasswordException, InvalidUserEmailException;
-
-    User findByEmail(String email);
+    User add(User user) throws InvalidUserPasswordException, InvalidUserEmailException;
 
     boolean delete(String id);
+
+    User findByUsername(String username);
+
+    List<User> findAll();
 
 }

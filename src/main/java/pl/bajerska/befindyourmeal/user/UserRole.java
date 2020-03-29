@@ -1,6 +1,6 @@
 package pl.bajerska.befindyourmeal.user;
 
-public enum UserType {
+public enum UserRole {
     ADMIN,
     USER;
 }

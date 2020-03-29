@@ -1,10 +1,15 @@
 package pl.bajerska.befindyourmeal.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import pl.bajerska.befindyourmeal.exception.InvalidUserEmailException;
+import pl.bajerska.befindyourmeal.exception.InvalidUserPasswordException;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 @Service
@@ -12,45 +17,40 @@ import java.util.regex.Pattern;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder){
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
-    public User update(UserLoginData userLoginData, UserType userType) throws InvalidUserPasswordException, InvalidUserEmailException {
-        if (userLoginData.getPassword() == null || userLoginData.getPassword().isEmpty()){
-            throw new InvalidUserPasswordException("Empty password was given.");
+    public User update(User user) throws InvalidUserPasswordException, InvalidUserEmailException {
+        if (user.getPassword() == null || user.getPassword().isEmpty()){
+            throw new InvalidUserPasswordException(user);
         }
-        Pattern pwdPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).{6,}$");
-        if (!pwdPattern.matcher(userLoginData.getPassword()).matches()){
-            throw new InvalidUserPasswordException("Password does not match rules.");
-        }
+//        Pattern pwdPattern = Pattern.compile("^((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})$");
+//        if (!pwdPattern.matcher(user.getPassword()).matches()){
+//            throw new InvalidUserPasswordException(user);
+//        }
         Pattern mailPattern = Pattern.compile("^[-\\w\\.]+@([-\\w]+\\.)+[a-z]+$");
-        if (!mailPattern.matcher(userLoginData.getEmail()).matches()){
-            throw new InvalidUserEmailException("Email does not match rules.");
+        if (!mailPattern.matcher(user.getUsername()).matches()){
+            throw new InvalidUserEmailException(user);
         }
-        User user = new User();
-        user.setEmail(userLoginData.getEmail());
-        user.setPassword(bCryptPasswordEncoder.encode(userLoginData.getPassword()));
-        user.setType(userType);
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
     @Override
-    public User add(UserLoginData userLoginData, UserType userType) throws InvalidUserPasswordException, InvalidUserEmailException {
-        if (findByEmail(userLoginData.getEmail()) != null) {
+    public User add(User user) throws InvalidUserPasswordException, InvalidUserEmailException {
+        if (findByUsername(user.getUsername()) != null) {
             return null;
         }
-        return update(userLoginData, userType);
+        return update(user);
     }
 
     @Override
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     @Override
@@ -61,6 +61,13 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+    @Override
+    @ModelAttribute("users")
+    public List<User> findAll() {
+        return (List<User>) userRepository.findAll();
+    }
+
 
 }
 

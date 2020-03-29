@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!--        <link href="styles/styles.css" rel="stylesheet">-->
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+
+    <title>User</title>
+</head>
+<body>
+
+<div class="page-inside">
+    <nav>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <table class="table table-bordered  table-striped table-responsive">
+            <thead>
+            <tr class="btn-info">
+                <th>Id</th>
+                <th>Username</th>
+                <th>Is_admin</th>
+                <th>Login_count</th>
+                <th>Last_login</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${user}">
+                <td th:text="${user.id}">id</td>
+                <td th:text="${user.username}">username</td>
+                <td th:text="${user.role}">role</td>
+                <td><a th:href="@{'/index/edit/' + ${user.id}}">Edit</a></td>
+                <td><a th:href="@{'/index/delete/' + ${user.id}}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript"
+        th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript"
+        th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
