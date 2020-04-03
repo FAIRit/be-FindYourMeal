@@ -28,20 +28,18 @@
             <tr class="btn-info">
                 <th>Id</th>
                 <th>Username</th>
-                <th>Is_admin</th>
-                <th>Login_count</th>
-                <th>Last_login</th>
+                <th>Role</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="user : ${user}">
-                <td th:text="${user.id}">id</td>
-                <td th:text="${user.username}">username</td>
-                <td th:text="${user.role}">role</td>
-                <td><a th:href="@{'/index/edit/' + ${user.id}}">Edit</a></td>
-                <td><a th:href="@{'/index/delete/' + ${user.id}}">Delete</a></td>
-            </tr>
+                <tr>
+                    <td th:text="${user.id}">id</td>
+                    <td th:text="${user.username}">username</td>
+                    <td th:text="${user.role}">role</td>
+                    <td><a th:href="@{'/index/edit/' + ${user.username}}">Edit</a></td>
+                    <td><a th:href="@{'/index/delete/' + ${user.username}}">Delete</a></td>
+                </tr>
             </tbody>
         </table>
     </div>

@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().disable();
         http.authorizeRequests()
                 .antMatchers("/main").authenticated()
-//                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/admin").hasAuthority("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()

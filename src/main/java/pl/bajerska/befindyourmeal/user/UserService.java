@@ -10,10 +10,10 @@ public interface UserService {
 
     User add(User user) throws InvalidUserPasswordException, InvalidUserEmailException;
 
-    boolean delete(String id);
+    boolean delete(String username);
 
     User findByUsername(String username);
 
-    List<User> findAll();
+    List<User> findAll(User principal);
 
 }

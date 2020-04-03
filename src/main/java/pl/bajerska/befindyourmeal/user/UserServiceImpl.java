@@ -54,9 +54,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean delete(String id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
+    public boolean delete(String username) {
+        User user = userRepository.findByUsername(username);
+        if(user != null) {
+            userRepository.deleteById(user.getId());
             return true;
         }
         return false;
@@ -64,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @ModelAttribute("users")
-    public List<User> findAll() {
+    public List<User> findAll(User principal) {
         return (List<User>) userRepository.findAll();
     }
 

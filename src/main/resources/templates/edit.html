@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <title>Edit</title>
+</head>
+<body>
+<form action="#" th:action="@{/update}" th:object="${user}" method="post">
+    <div class="form-control">
+        <input type="hidden" id="name" th:field="*{id}"/>
+    </div>
+    <div class="form-control">
+        <label class="header">Username <span>:</span></label>
+        <input id="username" th:field="*{username}" minlength="4" required/>
+    </div>
+
+    <div class="form-control">
+        <label class="enquiry">Password <span>:</span></label>
+        <input type="password" id="password" th:field="*{password}" minlength="6" required/>
+        <div class="clear"></div>
+    </div>
+    <div class="form-control" sec:authorize="hasRole('ROLE_ADMIN')">
+        <label class="enquiry">Is_admin <span>:</span></label>
+        <input id="is_admin" th:field="*{role}"/>
+        <div class="clear"></div>
+    </div>
+    <div class="form-control">
+        <input type="hidden" id="IS_ENABLED" th:field="*{enabled}"/>
+    </div>
+    <div class="form-control">
+        <a th:href="@{'/admin'}">Cancel</a>
+        <input type="submit" class="register" value="Save changes"/>
+        <div class="clear"></div>
+    </div>
+</form>
+<script type="text/javascript"
+        th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript"
+        th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -36,12 +36,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="user : ${users}">
+            <tr th:each="user : ${user}">
                 <td th:text="${user.id}">id</td>
                 <td th:text="${user.username}">username</td>
                 <td th:text="${user.role}">role</td>
-                <td><a th:href="@{'/index/edit/' + ${user.id}}">Edit</a></td>
-                <td><a th:href="@{'/index/delete/' + ${user.id}}">Delete</a></td>
+                <td><a th:href="@{'/index/edit/' + ${user.username}}">Edit</a></td>
+                <td><a th:href="@{'/index/delete/' + ${user.username}}">Delete</a></td>
             </tr>
             </tbody>
         </table>
