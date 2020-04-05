@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Find Recipe</h1>
+<form th:action="@{/register}" method="post">
+    Ingredient 1:
+    <input type="text" name="ingredient1">
+    Ingredient 2:
+    <input type="text" name="ingredient2">
+    Ingredient 3:
+    <input type="text" name="ingredient3">
+    Ingredient 4:
+    <input type="text" name="ingredient4">
+
+    <input type="submit" value="Search!">
+
+<!--    <ul>-->
+<!--        <li th:each="vegan : ${selectVegan}"></li>-->
+<!--            <div class="ui checkbox">-->
+<!--                <input type="checkbox" th:field="*{vegan}" th:value="${meetFree}">-->
+<!--                <label th:text="${vegan.name}"></label>-->
+<!--            </div>-->
+<!--    </ul>-->
+
+</form>
+
+</body>
+</html>

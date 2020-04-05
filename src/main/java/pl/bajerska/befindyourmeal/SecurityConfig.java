@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -14,35 +15,34 @@ import pl.bajerska.befindyourmeal.user.UserSimpleUrlAuthenticationSuccessHandler
 import javax.sql.DataSource;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
+    private final DataSource dataSource;
 
     private UserDetailsServiceImpl userDetailsService;
 
-    public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService, DataSource dataSource) {
         this.userDetailsService = userDetailsService;
+        this.dataSource = dataSource;
     }
-
-    @Autowired
-    private DataSource dataSource;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
     }
 
-        @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth)
-            throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery("SELECT username, password, 1 as enabled FROM user WHERE username=?")
-                .authoritiesByUsernameQuery("SELECT username, " +
-                        " CASE WHEN role = 'USER' then 'ROLE_USER' " +
-                        " ELSE 'ROLE_ADMIN' END FROM user WHERE username=?");
-
-    }
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth)
+//            throws Exception {
+//        auth.jdbcAuthentication()
+//                .dataSource(dataSource)
+//                .usersByUsernameQuery("SELECT username, password, 1 as enabled FROM user WHERE username=?")
+//                .authoritiesByUsernameQuery("SELECT username, " +
+//                        " CASE WHEN role = 'USER' then 'ROLE_USER' " +
+//                        " ELSE 'ROLE_ADMIN' END FROM user WHERE username=?");
+//
+//    }
 
 
     @Bean
@@ -51,18 +51,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.headers().disable();
+
         http.authorizeRequests()
-                .antMatchers("/main").authenticated()
-                .antMatchers("/admin").hasAuthority("ADMIN")
+                .antMatchers("/", "/main/**").permitAll()
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin().successHandler(userSimpleUrlAuthenticationSuccessHandler())
-                .and()
-                .logout().permitAll();
+                .formLogin()
+                .successHandler(userSimpleUrlAuthenticationSuccessHandler());
 
+        http.csrf().disable();
+        http.headers()
+                .frameOptions()
+                .sameOrigin();
     }
 
     @Bean

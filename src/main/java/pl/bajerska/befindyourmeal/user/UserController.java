@@ -1,58 +1,35 @@
 package pl.bajerska.befindyourmeal.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 
 @Controller
 public class UserController {
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     private UserService userService;
 
 
-    public UserController(UserService userService, UserRepository userRepository) {
+    public UserController(UserService userService, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
-
+        this.passwordEncoder = passwordEncoder;
     }
-
-
 
     @GetMapping("/")
     public String main(Model model) {
         return "main";
     }
 
-    @GetMapping("/login")
-    public String login(Model model) {
-        return "user";
-    }
-
-//    @GetMapping("/for-admin")
-//    public String forAdmin() {
-//        return "admin";
+//    @GetMapping("/login")
+//    public String login(Model model) {
+//        return "login";
 //    }
-
-    @GetMapping("/for-admin")
-    public Principal get(Principal principal) {
-        return principal;
-
-    }
-
-    @GetMapping("/for-user")
-    public String forUser() {
-        return "user";
-    }
 
     @GetMapping("/add")
     public String addUser(Model model) {
@@ -66,7 +43,7 @@ public class UserController {
         user.setEnabled(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.add(user);
-        return "add";
+        return "redirect:/login";
     }
 
     @GetMapping("/user")
@@ -115,4 +92,13 @@ public class UserController {
         return "redirect:/admin";
     }
 
+    @GetMapping("/addrecipe")
+    public String addrecipe(Model model) {
+        return "addrecipe";
+    }
+
+    @GetMapping("/findrecipe")
+    public String findrecipe(Model model) {
+        return "findrecipe";
+    }
 }

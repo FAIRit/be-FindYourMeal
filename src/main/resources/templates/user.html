@@ -20,6 +20,16 @@
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
             </ul>
         </div>
+        <div id="navbar2" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/findrecipe}">Find Recipe</a></li>
+            </ul>
+        </div>
+        <div id="navbar3" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/addrecipe}">Add Recipe</a></li>
+            </ul>
+        </div>
     </nav>
 
     <div class="main-content">
