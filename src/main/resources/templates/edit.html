@@ -26,9 +26,9 @@
         <input type="password" id="password" th:field="*{password}" minlength="6" required/>
         <div class="clear"></div>
     </div>
-    <div class="form-control" sec:authorize="hasRole('ROLE_ADMIN')">
-        <label class="enquiry">Is_admin <span>:</span></label>
-        <input id="is_admin" th:field="*{role}"/>
+    <div class="form-control" sec:authorize="hasAuthority('ADMIN')">
+        <label class="enquiry">Role <span>:</span></label>
+        <input id="role" th:field="*{role}"/>
         <div class="clear"></div>
     </div>
     <div class="form-control">

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <title>Find recipe</title>
+
+</head>
+<body>
+<h1>Find Recipe</h1>
+<!--th:object="${recipeCriteria}"-->
+<form action="#" th:action="@{/findrecipe}" method="post">
+    <div class="form-control">
+        <label class="header">Ingredient 1:</label>
+        <input id="ingredient1" th:field="${recipeCriteria.ingredients[0]}" minlength="3" required/>
+    </div>
+    <div class="form-control">
+        <label class="header">Ingredient 2:</label>
+        <input id="ingredient2" th:field="${recipeCriteria.ingredients[1]}" />
+    </div>
+    <div class="form-control">
+        <label class="header">Ingredient 3:</label>
+        <input id="ingredient3" th:field="${recipeCriteria.ingredients[2]}" />
+    </div>
+    <div class="form-control">
+        <label class="header">Ingredient 4:</label>
+        <input id="ingredient4" th:field="${recipeCriteria.ingredients[3]}" />
+    </div>
+    <div class="form-control">
+        <input type="submit" class="register" value="Search recipe!"/>
+        <div class="clear"></div>
+    </div>
+
+<!--        <ul>-->
+<!--            <li th:each="vegan : ${dietLabels}"></li>-->
+<!--                <div class="ui checkbox">-->
+<!--                    <input type="checkbox" th:field="*{balanced}" th:value="${balanced}">-->
+<!--                    <label th:text="${balanced}"></label>-->
+<!--                </div>-->
+<!--        </ul>-->
+
+
+</form>
+<script type="text/javascript"
+        th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript"
+        th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

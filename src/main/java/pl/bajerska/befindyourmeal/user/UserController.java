@@ -26,11 +26,6 @@ public class UserController {
         return "main";
     }
 
-//    @GetMapping("/login")
-//    public String login(Model model) {
-//        return "login";
-//    }
-
     @GetMapping("/add")
     public String addUser(Model model) {
         model.addAttribute("user", new User());
@@ -97,8 +92,4 @@ public class UserController {
         return "addrecipe";
     }
 
-    @GetMapping("/findrecipe")
-    public String findrecipe(Model model) {
-        return "findrecipe";
-    }
 }

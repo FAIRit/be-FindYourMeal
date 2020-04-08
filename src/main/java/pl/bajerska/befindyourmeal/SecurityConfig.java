@@ -1,6 +1,5 @@
 package pl.bajerska.befindyourmeal;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -31,19 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
     }
-
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth)
-//            throws Exception {
-//        auth.jdbcAuthentication()
-//                .dataSource(dataSource)
-//                .usersByUsernameQuery("SELECT username, password, 1 as enabled FROM user WHERE username=?")
-//                .authoritiesByUsernameQuery("SELECT username, " +
-//                        " CASE WHEN role = 'USER' then 'ROLE_USER' " +
-//                        " ELSE 'ROLE_ADMIN' END FROM user WHERE username=?");
-//
-//    }
-
 
     @Bean
     public AuthenticationSuccessHandler userSimpleUrlAuthenticationSuccessHandler() {
