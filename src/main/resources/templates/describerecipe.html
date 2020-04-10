@@ -14,7 +14,7 @@
 </head>
 <body>
 <h1>Find Recipe</h1>
-<!--th:object="${recipeCriteria}"-->
+
 <form action="#" th:action="@{/findrecipe}" method="post">
     <div class="form-control">
         <label class="header">Ingredient 1:</label>
@@ -36,15 +36,6 @@
         <input type="submit" class="register" value="Search recipe!"/>
         <div class="clear"></div>
     </div>
-
-<!--        <ul>-->
-<!--            <li th:each="vegan : ${dietLabels}"></li>-->
-<!--                <div class="ui checkbox">-->
-<!--                    <input type="checkbox" th:field="*{balanced}" th:value="${balanced}">-->
-<!--                    <label th:text="${balanced}"></label>-->
-<!--                </div>-->
-<!--        </ul>-->
-
 
 </form>
 <script type="text/javascript"

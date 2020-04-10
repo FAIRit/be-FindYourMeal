@@ -11,7 +11,26 @@
     <title>Recipe</title>
 </head>
 <body>
-    <h2 th:text="${recipe}">recipe</h2>
 
+<tr th:each="hit : ${edamamOutput.getHits()}">
+    Name of recipe:
+    <td th:text="${hit.recipe.getLabel()}"></td><br>
+    <img th:src="@{${hit.recipe.getImage()}}"/><br>
+    <b>Source:</b> <td th:text="${hit.recipe.getSource()}"></td><br>
+    <b>How to do it?:</b> <a th:href="@{${hit.recipe.getUrl()}}">Instruction</a><br>
+    <b>Number of portions:</b> <td th:text="${hit.recipe.getYield()}"></td><br>
+    <b>Type of diet:</b><td th:text="${hit.recipe.getDietLabels()}"></td><br>
+    <b>Health info:</b><td th:text="${hit.recipe.getHealthLabels()}"></td><br>
+    <b>Cautions!:</b><td th:text="${hit.recipe.getCautions()}"></td><br>
+    <b>Calories:</b><td th:text="${hit.recipe.getCalories()}"></td><br>
+    <b>Total weight:</b> <td th:text="${hit.recipe.getTotalWeight()}"></td><br>
+    <b>Total time to prepare:</b> <td th:text="${hit.recipe.getTotalTime()}"></td><br>
+    <b>Ingredients list:</b><td th:each="ingredient : ${hit.recipe.getIngredientLines()}">
+    <p th:text="${ingredient}"></p></td><br>
+
+
+        <p>+++++++++++++++++++++++++++++++++++++++++++++++++</p>
+
+    </tr>
 </body>
 </html>

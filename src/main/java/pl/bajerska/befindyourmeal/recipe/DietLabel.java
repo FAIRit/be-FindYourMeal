@@ -1,6 +1,6 @@
 package pl.bajerska.befindyourmeal.recipe;
 
-public enum DietLabels {
+public enum DietLabel {
 
     BALANCED,
     HIGH_FIBER,

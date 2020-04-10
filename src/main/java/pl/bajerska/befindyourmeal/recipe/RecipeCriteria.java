@@ -6,46 +6,55 @@ import java.util.ArrayList;
 
 public class RecipeCriteria {
 
-    ArrayList<String> ingredients = new ArrayList<String>();
+    private ArrayList<String> ingredients;
 
     @Enumerated(EnumType.STRING)
-    ArrayList<DietLabels> diet = new ArrayList<DietLabels>();
+    private ArrayList<DietLabel> diet;
 
     @Enumerated(EnumType.STRING)
-    ArrayList<HealthLabels> health = new ArrayList<HealthLabels>();
+    private ArrayList<HealthLabel> health;
 
-    ArrayList<String> excluded = new ArrayList<String>();
+    private ArrayList<String> excluded;
+
+    public RecipeCriteria() {
+        this.ingredients = new ArrayList<String>();
+        this.diet = new ArrayList<DietLabel>();
+        this.health = new ArrayList<HealthLabel>();
+        this.excluded = new ArrayList<String>();
+    }
 
     public ArrayList<String> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(ArrayList<String> ingredients) {
-        this.ingredients = ingredients;
+    public void addIngredient(String ingredient) {
+        this.ingredients.add(ingredient);
     }
 
-    public ArrayList<DietLabels> getDiet() {
+    public ArrayList<DietLabel> getDiet() {
         return diet;
     }
 
-    public void setDiet(ArrayList<DietLabels> diet) {
-        this.diet = diet;
+    public void addDietLabels(DietLabel diet) {
+        this.diet.add(diet);
     }
 
-    public ArrayList<HealthLabels> getHealth() {
+    public ArrayList<HealthLabel> getHealth() {
         return health;
     }
 
-    public void setHealth(ArrayList<HealthLabels> health) {
-        this.health = health;
+    public void addHealthLabels(HealthLabel health) {
+        this.health.add(health);
     }
 
     public ArrayList<String> getExcluded() {
         return excluded;
     }
 
-    public void setExcluded(ArrayList<String> excluded) {
-        this.excluded = excluded;
+    public void addExcluded(String excluded) {
+        this.excluded.add(excluded);
     }
+
+
 }
 

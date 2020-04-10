@@ -1,6 +1,6 @@
 package pl.bajerska.befindyourmeal.recipe;
 
-public enum HealthLabels {
+public enum HealthLabel {
 
     ALCOHOL_FREE,
     CELERY_FREE,
