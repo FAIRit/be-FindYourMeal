@@ -26,4 +26,10 @@ public class IngredientTag {
     public void addRecipe(Recipe recipe) {
         recipes.add(recipe);
     }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public IngredientTag() {}
 }

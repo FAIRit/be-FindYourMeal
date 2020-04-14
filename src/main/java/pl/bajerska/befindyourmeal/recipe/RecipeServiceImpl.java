@@ -6,7 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.bajerska.befindyourmeal.model.Recipe;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -41,6 +43,22 @@ public class RecipeServiceImpl implements RecipeService{
             tagRepository.save(tag);
         } );
         return recipe;
+    }
+
+    @Override
+    public List<Recipe> find(RecipeCriteria recipeCriteria) {
+        List<Recipe> found = new LinkedList<Recipe>();
+
+        recipeRepository.findAll().forEach(r -> {
+
+            if (r.getIngredientTags().stream()
+                    .map(IngredientTag::getTag).collect(Collectors.toList())
+                    .containsAll(recipeCriteria.getIngredients())) {
+                found.add(r);
+            }
+        });
+
+        return found;
     }
 
 }
