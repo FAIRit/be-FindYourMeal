@@ -1,6 +1,7 @@
 package pl.bajerska.befindyourmeal.model;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -9,6 +10,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import pl.bajerska.befindyourmeal.model.micro.Digest;
+import pl.bajerska.befindyourmeal.model.micro.TotalDaily;
+import pl.bajerska.befindyourmeal.model.micro.TotalNutrients;
+import pl.bajerska.befindyourmeal.recipe.IngredientTag;
+
+import javax.persistence.*;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -31,9 +38,15 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "totalDaily",
     "digest"
 })
+@Entity
+@Table(name = "recipe")
 public class Recipe {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @JsonProperty("uri")
+    @Transient
     private String uri;
     @JsonProperty("label")
     private String label;
@@ -44,18 +57,25 @@ public class Recipe {
     @JsonProperty("url")
     private String url;
     @JsonProperty("shareAs")
+    @Transient
     private String shareAs;
     @JsonProperty("yield")
     private Double yield;
     @JsonProperty("dietLabels")
+    @ElementCollection
     private List<String> dietLabels = null;
     @JsonProperty("healthLabels")
+    @ElementCollection
     private List<String> healthLabels = null;
     @JsonProperty("cautions")
+    @ElementCollection
     private List<String> cautions = null;
     @JsonProperty("ingredientLines")
+    @ElementCollection
     private List<String> ingredientLines = null;
     @JsonProperty("ingredients")
+    @ElementCollection
+    @Transient
     private List<Ingredient> ingredients = null;
     @JsonProperty("calories")
     private Double calories;
@@ -64,13 +84,28 @@ public class Recipe {
     @JsonProperty("totalTime")
     private Double totalTime;
     @JsonProperty("totalNutrients")
+    @Transient
     private TotalNutrients totalNutrients;
     @JsonProperty("totalDaily")
+    @Transient
     private TotalDaily totalDaily;
     @JsonProperty("digest")
+    @ElementCollection
+    @Transient
     private List<Digest> digest = null;
     @JsonIgnore
+    @Transient
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    @ManyToMany(mappedBy = "recipes")
+    private List<IngredientTag> ingredientTags = new LinkedList<IngredientTag>();
+
+    public List<IngredientTag> getIngredientTags() {
+        return ingredientTags;
+    }
+
+    public void addIngredientTag(IngredientTag tag) {
+        ingredientTags.add(tag);
+    }
 
     @JsonProperty("uri")
     public String getUri() {

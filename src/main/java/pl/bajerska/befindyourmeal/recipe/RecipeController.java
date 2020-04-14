@@ -13,9 +13,11 @@ import pl.bajerska.befindyourmeal.model.Recipe;
 public class RecipeController {
 
     private ApiService apiService;
+    private RecipeService recipeService;
 
-    public RecipeController(ApiService apiService) {
+    public RecipeController(ApiService apiService, RecipeService recipeService ) {
         this.apiService = apiService;
+        this.recipeService = recipeService;
     }
 
     @RequestMapping(value = {"describerecipe"}, method = RequestMethod.GET)
@@ -28,7 +30,10 @@ public class RecipeController {
     @PostMapping(value = {"/findrecipe"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public String findRecipe(RecipeCriteria recipeCriteria, Model model) {
 
-        model.addAttribute("edamamOutput", apiService.findRecipe(recipeCriteria));
+        EdamamOutput output = apiService.findRecipe(recipeCriteria);
+        output.getHits().stream().forEach(h -> recipeService.save(h.getRecipe(),output.getQ()));
+        model.addAttribute("edamamOutput", output);
+
         return "recipe";
     }
 
