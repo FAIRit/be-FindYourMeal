@@ -13,10 +13,12 @@ import java.util.List;
 public class RecipeServiceImpl implements RecipeService{
 
     private RecipeRepository recipeRepository;
+    private IngredientTagRepository tagRepository;
 
     @Autowired
-    public RecipeServiceImpl(RecipeRepository recipeRepository) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository, IngredientTagRepository tagRepository) {
         this.recipeRepository = recipeRepository;
+        this.tagRepository = tagRepository;
     }
 
     @Override
@@ -25,9 +27,20 @@ public class RecipeServiceImpl implements RecipeService{
         if (found != null) {
             return found;
         }
+        recipeRepository.save(recipe);
+
         String[] labels = q.split(",");
-        Arrays.stream(labels).forEach(x -> recipe.addIngredientTag(new IngredientTag(x)));
-        return recipeRepository.save(recipe);
+
+        Arrays.stream(labels).forEach(x -> {
+            IngredientTag tag = tagRepository.findByTag(x);
+            if (tag == null) {
+                tag = new IngredientTag(x);
+            }
+            recipe.addIngredientTag(tag);
+            tag.addRecipe(recipe);
+            tagRepository.save(tag);
+        } );
+        return recipe;
     }
 
 }
