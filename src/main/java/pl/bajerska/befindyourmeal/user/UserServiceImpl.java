@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder){
+    public UserServiceImpl(UserRepository userRepository){
         this.userRepository = userRepository;
     }
 
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @ModelAttribute("users")
-    public List<User> findAll(User principal) {
+    public List<User> findAll() {
         return (List<User>) userRepository.findAll();
     }
 

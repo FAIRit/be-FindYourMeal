@@ -49,7 +49,9 @@ public class UserController {
 
     @GetMapping("/admin")
     public String getAllUsersList(Model model, Authentication authentication) {
-        model.addAttribute("user", userService.findAll((User) authentication.getPrincipal()));
+        model.addAttribute("user", userService.findAll());
+
+//        model.addAttribute("user", userService.findAll((User) authentication.getPrincipal()));
         return "admin";
     }
 
