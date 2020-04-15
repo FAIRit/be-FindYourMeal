@@ -28,15 +28,12 @@ public class UserServiceImpl implements UserService {
         if (user.getPassword() == null || user.getPassword().isEmpty()){
             throw new InvalidUserPasswordException(user);
         }
-//        Pattern pwdPattern = Pattern.compile("^((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})$");
-//        if (!pwdPattern.matcher(user.getPassword()).matches()){
-//            throw new InvalidUserPasswordException(user);
-//        }
+
         Pattern mailPattern = Pattern.compile("^[-\\w\\.]+@([-\\w]+\\.)+[a-z]+$");
         if (!mailPattern.matcher(user.getUsername()).matches()){
             throw new InvalidUserEmailException(user);
         }
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         return userRepository.save(user);
     }
 
