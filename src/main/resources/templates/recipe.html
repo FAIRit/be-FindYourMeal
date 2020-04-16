@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!--        <link href="styles/styles.css" rel="stylesheet">-->
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <title>Recipe</title>
+</head>
+<body>
+
+<div id="navbar3" class="collapse navbar-collapse">
+    <ul class="nav navbar-nav">
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/describerecipe}">Find Recipe</a></li>
+    </ul>
+</div>
+
+<div id="navbar4" class="collapse navbar-collapse">
+    <ul class="nav navbar-nav">
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/user}">Back to User page</a></li>
+    </ul>
+</div>
+
+<tr th:each="recipe : ${recipeList}">
+    Name of recipe:
+    <td th:text="${recipe.getLabel()}"></td><br>
+    <img th:src="@{${recipe.getImage()}}"/><br>
+    <b>Source:</b> <td th:text="${recipe.getSource()}"></td><br>
+    <b>How to do it?:</b> <a th:href="@{${recipe.getUrl()}}">Instruction</a><br>
+    <b>Number of portions:</b> <td th:text="${recipe.getYield()}"></td><br>
+    <b>Type of diet:</b><td th:text="${recipe.getDietLabels()}"></td><br>
+    <b>Health info:</b><td th:text="${recipe.getHealthLabels()}"></td><br>
+    <b>Cautions!:</b><td th:text="${recipe.getCautions()}"></td><br>
+    <b>Calories:</b><td th:text="${recipe.getCalories()}"></td><br>
+    <b>Total weight:</b> <td th:text="${recipe.getTotalWeight()}"></td><br>
+    <b>Total time to prepare:</b> <td th:text="${recipe.getTotalTime()}"></td><br>
+    <b>Ingredients list:</b><td th:each="ingredient : ${recipe.getIngredientLines()}">
+    <p th:text="${ingredient}"></p></td><br>
+
+
+    <p>+++++++++++++++++++++++++++++++++++++++++++++++++</p>
+
+</tr>
+</body>
+</html>
