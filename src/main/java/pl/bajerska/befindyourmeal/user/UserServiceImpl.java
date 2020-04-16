@@ -29,6 +29,9 @@ public class UserServiceImpl implements UserService {
             throw new InvalidUserPasswordException(user);
         }
 
+        if (user.getUsername() == null){
+            throw new InvalidUserEmailException(user);
+        }
         Pattern mailPattern = Pattern.compile("^[-\\w\\.]+@([-\\w]+\\.)+[a-z]+$");
         if (!mailPattern.matcher(user.getUsername()).matches()){
             throw new InvalidUserEmailException(user);
