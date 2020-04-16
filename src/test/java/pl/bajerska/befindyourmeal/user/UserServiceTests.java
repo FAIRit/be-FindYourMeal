@@ -1,29 +1,39 @@
 package pl.bajerska.befindyourmeal.user;
 
-import org.junit.Rule;
-import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
-import pl.bajerska.befindyourmeal.exception.ExceptionAdviceSet;
 import pl.bajerska.befindyourmeal.exception.InvalidUserPasswordException;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
-
+@RunWith(JUnit4.class)
 public class UserServiceTests {
+
+
+    private UserRepository userRepository;
+    private UserServiceImpl userService;
+
+    @Before
+    public void setUp(){
+        userRepository = mock(UserRepository.class);
+        userService = new UserServiceImpl(userRepository);
+    }
+
+
     @Test
     public void shouldNotFindUser() {
 
-
-        UserRepository repository = Mockito.mock(UserRepository.class);
-        UserServiceImpl service = new UserServiceImpl(repository);
-        Mockito.when(repository.findByUsername("zofia.bajerska")).thenReturn(null);
         String name = new String("zofia.bajerska@gmail.com");
+        Mockito.when(userRepository.findByUsername(name)).thenReturn(null);
 
-        User user = service.findByUsername(name);
+        User user = userService.findByUsername(name);
 
         assertNull(user);
     }
@@ -31,12 +41,10 @@ public class UserServiceTests {
     @Test
     public void shouldFindUser() {
 
-        UserRepository repository = Mockito.mock(UserRepository.class);
-        UserServiceImpl service = new UserServiceImpl(repository);
         String name = new String("zofia.bajerska@gmail.com");
-        Mockito.when(repository.findByUsername(name)).thenReturn(new User());
+        Mockito.when(userRepository.findByUsername(name)).thenReturn(new User());
 
-        User user = service.findByUsername(name);
+        User user = userService.findByUsername(name);
 
         assertNotNull(user);
     }
@@ -44,14 +52,12 @@ public class UserServiceTests {
     @Test
     public void shouldFindAll() {
 
-        UserRepository repository = Mockito.mock(UserRepository.class);
-        UserServiceImpl service = new UserServiceImpl(repository);
         List<User> list = new LinkedList<>();
         list.add(new User());
         list.add(new User());
-        Mockito.when(repository.findAll()).thenReturn(list);
+        Mockito.when(userRepository.findAll()).thenReturn(list);
 
-        List<User> found = (List<User>) service.findAll();
+        List<User> found = (List<User>) userService.findAll();
 
         assertNotNull(found);
         assertEquals(found.size(), list.size());
@@ -60,11 +66,9 @@ public class UserServiceTests {
     @Test
     public void shouldNotFindAll() {
 
-        UserRepository repository = Mockito.mock(UserRepository.class);
-        UserServiceImpl service = new UserServiceImpl(repository);
-        Mockito.when(repository.findAll()).thenReturn(new LinkedList<>());
+        Mockito.when(userRepository.findAll()).thenReturn(new LinkedList<>());
 
-        List<User> found = (List<User>) service.findAll();
+        List<User> found = (List<User>) userService.findAll();
 
         assertEquals(found.size(), 0);
     }
@@ -72,14 +76,12 @@ public class UserServiceTests {
     @Test
     public void shouldDeleteUser() {
 
-        UserRepository repository = Mockito.mock(UserRepository.class);
-        UserServiceImpl service = new UserServiceImpl(repository);
         String username = new String("haha@gmail.com");
         User user = new User();
         user.setId((long) 2);
-        Mockito.when(repository.findByUsername(username)).thenReturn(user);
+        Mockito.when(userRepository.findByUsername(username)).thenReturn(user);
 
-        boolean status = service.delete(username);
+        boolean status = userService.delete(username);
 
         assertEquals(status, true);
     }
@@ -87,14 +89,12 @@ public class UserServiceTests {
     @Test
     public void shouldNotDeleteUser() {
 
-        UserRepository repository = Mockito.mock(UserRepository.class);
-        UserServiceImpl service = new UserServiceImpl(repository);
         String username = new String("haha@gmail.com");
         User user = new User();
         user.setId((long) 2);
-        Mockito.when(repository.findByUsername(username)).thenReturn(null);
+        Mockito.when(userRepository.findByUsername(username)).thenReturn(null);
 
-        boolean status = service.delete(username);
+        boolean status = userService.delete(username);
 
         assertEquals(status, false);
     }
@@ -102,15 +102,12 @@ public class UserServiceTests {
     @Test
     public void shouldUpdateUser() {
 
-
-        UserRepository repository = Mockito.mock(UserRepository.class);
-        UserServiceImpl service = new UserServiceImpl(repository);
         String username = new String("haha@gmail.com");
         User user = new User();
         user.setUsername(username);
         user.setPassword(null);
 
-        Throwable exception = assertThrows(InvalidUserPasswordException.class, () -> service.update(user));
+        Throwable exception = assertThrows(InvalidUserPasswordException.class, () -> userService.update(user));
 
 
     }
