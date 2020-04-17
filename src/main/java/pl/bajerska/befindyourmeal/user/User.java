@@ -19,7 +19,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Email
+    @Email(message = "Email should be valid.")
     @Column(unique = true, nullable = false)
     private String username;
 

@@ -19,6 +19,7 @@ public class IngredientTag {
     @ManyToMany
     private List<Recipe> recipes = new LinkedList<Recipe>();
 
+
     public IngredientTag(String tag) {
         this.tag = tag;
     }
