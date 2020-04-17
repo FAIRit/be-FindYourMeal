@@ -103,6 +103,7 @@ public class UserServiceTests {
     @Test
     public void shouldNotUpdateUserWithNullPassword() {
 
+
         String username = new String("haha@gmail.com");
         User user = new User();
         user.setUsername(username);
@@ -205,7 +206,6 @@ public class UserServiceTests {
         User added = userService.add(user);
         assertEquals(added.getUsername(), user.getUsername());
         assertEquals(added.getPassword(), user.getPassword());
-
     }
 
 }
