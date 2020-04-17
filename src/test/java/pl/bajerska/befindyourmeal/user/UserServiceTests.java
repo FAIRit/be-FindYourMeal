@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
+import pl.bajerska.befindyourmeal.exception.InvalidUserEmailException;
 import pl.bajerska.befindyourmeal.exception.InvalidUserPasswordException;
 
 import java.util.LinkedList;
@@ -100,7 +101,8 @@ public class UserServiceTests {
     }
 
     @Test
-    public void shouldUpdateUser() {
+    public void shouldNotUpdateUserWithNullPassword() {
+
 
         String username = new String("haha@gmail.com");
         User user = new User();
@@ -109,7 +111,101 @@ public class UserServiceTests {
 
         Throwable exception = assertThrows(InvalidUserPasswordException.class, () -> userService.update(user));
 
+    }
 
+    @Test
+    public void shouldNotUpdateUserWithEmptyPassword() {
+
+        String username = new String("haha@gmail.com");
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword("");
+
+        Throwable exception = assertThrows(InvalidUserPasswordException.class, () -> userService.update(user));
+
+    }
+
+    @Test
+    public void shouldNotUpdateUserWithNullUsername() {
+
+        User user = new User();
+        user.setUsername(null);
+        user.setPassword("Kasia123");
+
+        Throwable exception = assertThrows(InvalidUserEmailException.class, () -> userService.update(user));
+
+    }
+
+    @Test
+    public void shouldNotUpdateUserWithUsernameWithoutAtSign() {
+
+        User user = new User();
+        user.setUsername("zofia.bajerskagmail.com");
+        user.setPassword("Kasia123");
+
+        Throwable exception = assertThrows(InvalidUserEmailException.class, () -> userService.update(user));
+
+    }
+
+    @Test
+    public void shouldNotUpdateUserWithUsernameWithoutDot() {
+
+        User user = new User();
+        user.setUsername("zofia.bajerska@gmailcom");
+        user.setPassword("Kasia123");
+
+        Throwable exception = assertThrows(InvalidUserEmailException.class, () -> userService.update(user));
+
+    }
+    @Test
+    public void shouldNotUpdateUserWithEmptyUsername() {
+
+        User user = new User();
+        user.setUsername("");
+        user.setPassword("Kasia123");
+
+        Throwable exception = assertThrows(InvalidUserEmailException.class, () -> userService.update(user));
+
+    }
+
+    @Test
+    public void shouldUpdateUser() {
+
+        User user = new User();
+        user.setUsername("haha@gmail.com");
+        user.setPassword("Kasia123");
+        Mockito.when(userRepository.save(user)).thenReturn(user);
+
+        User updated = userService.update(user);
+        assertEquals(updated.getUsername(), user.getUsername());
+        assertEquals(updated.getPassword(), user.getPassword());
+
+    }
+
+    @Test
+    public void shouldNotAddUser() {
+
+        User user = new User();
+        user.setUsername("haha@gmail.com");
+        user.setPassword("Kasia123");
+        Mockito.when(userRepository.findByUsername(user.getUsername())).thenReturn(user);
+
+        User added = userService.add(user);
+        assertNull(added);
+    }
+
+    @Test
+    public void shouldAddUser() {
+
+        User user = new User();
+        user.setUsername("haha@gmail.com");
+        user.setPassword("Kasia123");
+        Mockito.when(userRepository.findByUsername(user.getUsername())).thenReturn(null);
+        Mockito.when(userRepository.save(user)).thenReturn(user);
+
+        User added = userService.add(user);
+        assertEquals(added.getUsername(), user.getUsername());
+        assertEquals(added.getPassword(), user.getPassword());
     }
 
 }
