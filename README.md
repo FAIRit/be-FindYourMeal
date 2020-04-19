@@ -13,9 +13,17 @@
 This application can provide You recipe ideas with Your chosen ingredients.
 
 ## User stories
- User can create/update/delete an account
- User can log in using email and password
- User can search recipe for ingredient
+[x] User can create/update/delete an account.
+
+[x] User can log in using email and password.
+
+[x] User can search recipe for ingredient.
+
+Coming soon:
+
+[x] User can add his favourite recipe to the cookbook.
+
+[x] User can add his own recipe to app.
 	
 ## Technologies
 * Java 11
@@ -37,3 +45,5 @@ Run with IntelliJ - the project was developed using Jetbrains IntelliJ and can b
 ## Sources
 For the application I used https://developer.edamam.com/edamam-recipe-api.
 
+### Status:
+Work in progress. 
