@@ -19,4 +19,10 @@ public class ExceptionAdviceSet {
         return ex.getMessage();
     }
 
+    @ExceptionHandler(EmptyIngredientsStringException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String emptyIngredientsStringHandler(EmptyIngredientsStringException ex) {
+        return ex.getMessage();
+    }
+
 }
