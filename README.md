@@ -1,25 +1,39 @@
-#Recipe Search
-#Author Zofia B. 
+# Find Your meal - search recipe for ingredient You've already got.
+
 
 ## Table of contents
 * [General info](#general-info)
+* [User stories](#user_stories)
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Sources](#sources)
 
 
 ## General info
-This is application in which you can search for recipes with an idea for dinner based on your ingredients.
+This application can provide You recipe ideas with Your chosen ingredients.
+
+## User stories
+ User can create/update/delete an account
+ User can log in using email and password
+ User can search recipe for ingredient
 	
 ## Technologies
-Project is created with:
-* Spring version: 2.2.5, 
-* Hibernate database,
-* 
+* Java 11
+* SpringBoot (JPA, Security, Thymeleaf, Web)
+* Hibernate
+* H2
+* RestAPI
+* GIT 
+* Mockito
+* JUnit
 	
 ## Setup
-To run this project, install it locally and ......................................
+Run with IntelliJ - the project was developed using Jetbrains IntelliJ and can be imported with pom.xml file
+(prerequisites) - you need Maven and Java 11
+* 'mvn install' - to download dependencies
+* 'mvn spring-boot:run' - for opening via command line
+* opening web browser on http://localhost:8080 - you can expect a main page
 
 ## Sources
-For the aplication I used https://developer.edamam.com/edamam-recipe-api.
+For the application I used https://developer.edamam.com/edamam-recipe-api.
 
