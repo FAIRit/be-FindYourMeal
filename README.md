@@ -13,17 +13,15 @@
 This application can provide You recipe ideas with Your chosen ingredients.
 
 ## User stories
-[x] User can create/update/delete an account.
-
-[x] User can log in using email and password.
-
-[x] User can search recipe for ingredient.
+ - [x] User can create/update/delete an account.
+ - [x] User can log in using email and password.
+ - [x] User can search recipe for ingredient.
 
 Coming soon:
 
-[x] User can add his favourite recipe to the cookbook.
+ - [ ] User can add his favourite recipe to the cookbook.
 
-[x] User can add his own recipe to app.
+ - [ ] User can add his own recipe to app.
 	
 ## Technologies
 * Java 11
