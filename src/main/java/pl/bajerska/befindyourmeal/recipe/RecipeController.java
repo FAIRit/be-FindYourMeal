@@ -1,5 +1,6 @@
 package pl.bajerska.befindyourmeal.recipe;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ public class RecipeController {
     }
 
     @RequestMapping(value = {"describerecipe"}, method = RequestMethod.GET)
+    @ApiOperation(value = "Preparing empty form for parameters (ingredients) to find recipe in API.", response = String.class)
     public String getRecipe(Model model) {
         RecipeCriteria recipeCriteria = new RecipeCriteria();
         model.addAttribute("recipeCriteria", recipeCriteria);
@@ -30,6 +32,7 @@ public class RecipeController {
     }
 
     @PostMapping(value = {"/findrecipe"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Find and get recipe for request param from API.", response = String.class)
     public String findRecipe(RecipeCriteria recipeCriteria, Model model) {
 
         recipeCriteria.getIngredients().removeIf(String::isEmpty);
@@ -47,6 +50,12 @@ public class RecipeController {
         // model.addAttribute("edamamOutput", output);
 
         return "recipe";
+    }
+
+    @GetMapping("/addrecipe")
+    @ApiOperation(value = "Add new recipe.", response = String.class)
+    public String addrecipe(Model model) {
+        return "addrecipe";
     }
 
 }
