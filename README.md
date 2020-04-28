@@ -32,6 +32,7 @@ Coming soon:
 * GIT 
 * Mockito
 * JUnit
+* Swagger
 	
 ## Setup
 Run with IntelliJ - the project was developed using Jetbrains IntelliJ and can be imported with pom.xml file

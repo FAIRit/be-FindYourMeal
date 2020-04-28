@@ -1,4 +1,4 @@
-package pl.bajerska.befindyourmeal;
+package pl.bajerska.befindyourmeal.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
