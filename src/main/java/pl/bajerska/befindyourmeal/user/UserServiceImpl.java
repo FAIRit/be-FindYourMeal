@@ -15,10 +15,11 @@ import java.util.regex.Pattern;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
+    private static final String MAIL_PATTERN = "^[-\\w\\.]+@([-\\w]+\\.)+[a-z]+$";
 
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository){
+    private final UserRepository userRepository;
+
+    public UserServiceImpl(final UserRepository userRepository){
         this.userRepository = userRepository;
     }
 
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
             throw new InvalidUserEmailException(user);
         }
 
-        Pattern mailPattern = Pattern.compile("^[-\\w\\.]+@([-\\w]+\\.)+[a-z]+$");
+        Pattern mailPattern = Pattern.compile(MAIL_PATTERN);
         if (!mailPattern.matcher(user.getUsername()).matches()){
             throw new InvalidUserEmailException(user);
         }

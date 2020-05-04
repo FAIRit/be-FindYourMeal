@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
 import pl.bajerska.befindyourmeal.exception.EmptyIngredientsStringException;
+import pl.bajerska.befindyourmeal.ingredient.IngredientTag;
+import pl.bajerska.befindyourmeal.ingredient.IngredientTagRepository;
 import pl.bajerska.befindyourmeal.model.Recipe;
 
 import java.util.LinkedList;

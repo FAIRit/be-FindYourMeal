@@ -15,10 +15,10 @@ import java.util.List;
 @Controller
 public class RecipeController {
 
-    private ApiService apiService;
-    private RecipeService recipeService;
+    private final ApiService apiService;
+    private final RecipeService recipeService;
 
-    public RecipeController(ApiService apiService, RecipeService recipeService ) {
+    public RecipeController(final ApiService apiService, final RecipeService recipeService ) {
         this.apiService = apiService;
         this.recipeService = recipeService;
     }
@@ -47,8 +47,6 @@ public class RecipeController {
         }
 
         model.addAttribute("recipeList", found);
-        // model.addAttribute("edamamOutput", output);
-
         return "recipe";
     }
 

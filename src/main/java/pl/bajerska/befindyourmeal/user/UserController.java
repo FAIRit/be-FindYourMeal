@@ -16,10 +16,10 @@ public class UserController {
 
     private final BCryptPasswordEncoder passwordEncoder;
 
-    private UserService userService;
+    private final UserService userService;
 
 
-    public UserController(UserService userService, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserController(final UserService userService, final BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
