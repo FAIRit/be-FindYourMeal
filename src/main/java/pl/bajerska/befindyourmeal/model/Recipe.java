@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import pl.bajerska.befindyourmeal.model.micro.Digest;
 import pl.bajerska.befindyourmeal.model.micro.TotalDaily;
 import pl.bajerska.befindyourmeal.model.micro.TotalNutrients;
-import pl.bajerska.befindyourmeal.recipe.IngredientTag;
+import pl.bajerska.befindyourmeal.ingredient.IngredientTag;
 
 import javax.persistence.*;
 

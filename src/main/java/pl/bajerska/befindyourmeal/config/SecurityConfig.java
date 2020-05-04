@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import pl.bajerska.befindyourmeal.user.UserDetailsServiceImpl;
+import pl.bajerska.befindyourmeal.user.UserService;
 import pl.bajerska.befindyourmeal.user.UserSimpleUrlAuthenticationSuccessHandler;
 
 import javax.sql.DataSource;
@@ -18,12 +19,13 @@ import javax.sql.DataSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final DataSource dataSource;
+    private final UserDetailsServiceImpl userDetailsService;
+    private final UserService userService;
 
-    private UserDetailsServiceImpl userDetailsService;
-
-    public SecurityConfig(UserDetailsServiceImpl userDetailsService, DataSource dataSource) {
+    public SecurityConfig(final UserDetailsServiceImpl userDetailsService, final DataSource dataSource, final UserService userService) {
         this.userDetailsService = userDetailsService;
         this.dataSource = dataSource;
+        this.userService = userService;
     }
 
     @Override
@@ -33,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationSuccessHandler userSimpleUrlAuthenticationSuccessHandler() {
-        return new UserSimpleUrlAuthenticationSuccessHandler();
+        return new UserSimpleUrlAuthenticationSuccessHandler(userService);
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {

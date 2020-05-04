@@ -3,6 +3,7 @@ package pl.bajerska.befindyourmeal.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
@@ -17,8 +18,15 @@ public class UserSimpleUrlAuthenticationSuccessHandler implements Authentication
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
-    @Autowired
-    private UserService userService;
+//    @Autowired
+//    private UserService userService;
+
+
+    private final UserService userService;
+
+    public UserSimpleUrlAuthenticationSuccessHandler(final UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,

@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.bajerska.befindyourmeal.exception.EmptyIngredientsStringException;
+import pl.bajerska.befindyourmeal.ingredient.IngredientTag;
+import pl.bajerska.befindyourmeal.ingredient.IngredientTagRepository;
 import pl.bajerska.befindyourmeal.model.Recipe;
 
 import java.util.Arrays;
@@ -11,27 +13,28 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
+
 @Service
 @Transactional
 public class RecipeServiceImpl implements RecipeService{
 
-    private RecipeRepository recipeRepository;
-    private IngredientTagRepository tagRepository;
+    private final RecipeRepository recipeRepository;
+    private final IngredientTagRepository tagRepository;
 
     @Autowired
-    public RecipeServiceImpl(RecipeRepository recipeRepository, IngredientTagRepository tagRepository) {
+    public RecipeServiceImpl(final RecipeRepository recipeRepository, final IngredientTagRepository tagRepository) {
         this.recipeRepository = recipeRepository;
         this.tagRepository = tagRepository;
     }
 
     @Override
-    public Recipe save(Recipe recipe, String q) {
+    public Recipe save(Recipe recipe, String query) {
 
-        if (q.isEmpty()) {
+        if (query.isEmpty()) {
             throw new EmptyIngredientsStringException();
         }
-
-        String[] labels = q.split(",");
+        String[] labels = query.split(",");
 
         Recipe found = recipeRepository.findByLabel(recipe.getLabel());
         if (found != null) {
@@ -39,10 +42,10 @@ public class RecipeServiceImpl implements RecipeService{
         }
         recipeRepository.save(recipe);
 
-        Arrays.stream(labels).forEach(x -> {
-            IngredientTag tag = tagRepository.findByTag(x);
-            if (tag == null) {
-                tag = new IngredientTag(x);
+        Arrays.stream(labels).forEach(ingredient -> {
+            IngredientTag tag = tagRepository.findByTag(ingredient);
+            if (isNull(tag)) {
+                tag = new IngredientTag(ingredient);
             }
             recipe.addIngredientTag(tag);
             tag.addRecipe(recipe);
@@ -53,7 +56,7 @@ public class RecipeServiceImpl implements RecipeService{
 
     @Override
     public List<Recipe> find(RecipeCriteria recipeCriteria) {
-        List<Recipe> foundRecipes = new LinkedList<Recipe>();
+        List<Recipe> foundRecipes = new LinkedList<>();
 
         recipeRepository.findAll().forEach(r -> {
 

@@ -1,4 +1,4 @@
-package pl.bajerska.befindyourmeal.recipe;
+package pl.bajerska.befindyourmeal.ingredient;
 
 import pl.bajerska.befindyourmeal.model.Recipe;
 

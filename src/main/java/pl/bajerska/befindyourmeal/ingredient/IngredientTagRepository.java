@@ -1,6 +1,7 @@
-package pl.bajerska.befindyourmeal.recipe;
+package pl.bajerska.befindyourmeal.ingredient;
 
 import org.springframework.data.repository.CrudRepository;
+import pl.bajerska.befindyourmeal.ingredient.IngredientTag;
 
 public interface IngredientTagRepository extends CrudRepository<IngredientTag, Long> {
 
